@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
-  apiKey: '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',
+  apiKey: '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',
 });
 const openai = new OpenAIApi(configuration);
 
