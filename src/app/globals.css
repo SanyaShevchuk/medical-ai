@@ -1,3 +1,7 @@
+/* Material UI Roboto font */
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
