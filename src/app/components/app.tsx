@@ -9,21 +9,31 @@ type Message = {
 };
 export default function Fetcher() {
   const [messages, setMessages] = useState<Array<Message>>([]);
-  const [value, setValue] = useState<string>();
+  const [value, setValue] = useState<string>(
+    "основуючись на даному тексті, як звати головного персонажа та скільки йому років?"
+  );
   const [loading, setLoading] = useState(false);
+  const [file, setFile] = useState(null);
 
   const onSearch = () => {
+    const formData = new FormData();
+    formData.append("files", file!);
     setLoading(true);
     setMessages((prev) =>
       value ? [...prev, { message: value, sender: "user" }] : prev
     );
     setValue("");
-    fetch(`/api/hello?query=${value}`)
+    console.log(file, "file", formData, "onSearch");
+
+    fetch(`/api/chat?query=${value}`, {
+      method: "POST",
+      body: formData,
+    })
       .then((response) => response.json())
       .then(({ data }) => {
         setLoading(false);
         setMessages((prev) => {
-          const messages = data.choices.map(({ text }: any) => ({
+          const messages = (data?.choices || []).map(({ text }: any) => ({
             sender: "ai",
             message: text,
           }));
@@ -68,9 +78,14 @@ export default function Fetcher() {
         </Box>
 
         {loading && <p>Loading...</p>}
-        
       </Box>
-      <SearchInput value={value} setValue={setValue} onSearch={onSearch} onClear={onClear} />
+      <SearchInput
+        value={value}
+        setValue={setValue}
+        onSearch={onSearch}
+        onClear={onClear}
+        onUpload={setFile}
+      />
     </>
   );
 }
