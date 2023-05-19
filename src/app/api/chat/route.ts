@@ -68,7 +68,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     for (const chunk of contents) {
       const prompt = chunk + "\n\n" + query;
       result = await openAIRequest(prompt);
-      console.log(result, 'result')
+      console.log(result?.data, 'result')
     }
 
     const metadata = {
@@ -90,8 +90,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
     // const fileContent = await getFileContent(storage, snapshot.metadata.fullPath);
     // console.log(fileContent, "fileContent");
     return NextResponse.json({ data: result.data });
-  } catch (err) {
-    console.log(err, "err");
+  } catch (err: any) {
+    console.log(err.message, 'message');
+    console.log(err.response?.data);
+    return NextResponse.json({ data: [] });
   }
 }
 /*
