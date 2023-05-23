@@ -98,7 +98,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 }
 /*
  TODO:
- - refine text
+ - refine text to remove new lines, articles, redundant words
  - how to choose from different answers correct one
 */
 
